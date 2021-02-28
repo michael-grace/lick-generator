@@ -2,17 +2,27 @@ import wave
 import numpy
 import pygame
 
-def lick_maths(start_freq, tempo):
+def lick_maths(start_freq, tempo, ornament):
     calc_tempo = tempo / 30
-    return [
+
+    notes =  [
         (start_freq, 1.0/calc_tempo),
         (start_freq*1.125, 1.0/calc_tempo),
         (start_freq*1.2, 1.0/calc_tempo),
         (start_freq*(4/3), 1.0/calc_tempo),
-        (start_freq*1.125, 2.0/calc_tempo),
+
+        (start_freq*(16/15), 0.5/calc_tempo) if ornament == "ACC" else None,
+
+        (start_freq*(16/15), (1/3)/calc_tempo) if ornament == "TURN" else None,
+        (start_freq, (1/3)/calc_tempo) if ornament == "TURN" else None,
+        (start_freq*1.2, (1/3)/calc_tempo) if ornament == "TURN" else None,
+
+        (start_freq*1.125, 2.0/calc_tempo - (0.5/calc_tempo if ornament == "ACC" else 0)),
         (start_freq*(8/9), 1.0/calc_tempo),
         (start_freq, 5.0/calc_tempo)
     ]
+
+    return [note for note in notes if note]
 
 sfile = wave.open('lick.wav', 'w')
 sfile.setframerate(48000)
@@ -21,7 +31,7 @@ sfile.setsampwidth(2)
 pygame.init()
 pygame.mixer.init(frequency=48000, channels=2)
 
-for note in lick_maths(500, 300):
+for note in lick_maths(800, 120, "TURN"):
     ncycles = note[1] * note[0]
     spc = int((48000 * note[1]) / ncycles)
 
