@@ -2,14 +2,15 @@ import wave
 import numpy
 import pygame
 
-def lick_maths(start_freq, tempo, ornament):
+def lick_maths(start_freq, tempo, ornament, swing):
     calc_tempo = tempo / 30
+    swings = [4/3, 2/3] if swing else [1, 1] 
 
     notes =  [
-        (start_freq, 1.0/calc_tempo),
-        (start_freq*1.125, 1.0/calc_tempo),
-        (start_freq*1.2, 1.0/calc_tempo),
-        (start_freq*(4/3), 1.0/calc_tempo),
+        (start_freq, (1.0/calc_tempo)*swings[0]),
+        (start_freq*1.125, (1.0/calc_tempo)*swings[1]),
+        (start_freq*1.2, (1.0/calc_tempo)*swings[0]),
+        (start_freq*(4/3), (1.0/calc_tempo)*swings[1]),
 
         (start_freq*(16/15), 0.5/calc_tempo) if ornament == "ACC" else None,
 
@@ -18,8 +19,9 @@ def lick_maths(start_freq, tempo, ornament):
         (start_freq*1.2, (1/3)/calc_tempo) if ornament == "TURN" else None,
 
         (start_freq*1.125, 2.0/calc_tempo - (0.5/calc_tempo if ornament == "ACC" else 0)),
-        (start_freq*(8/9), 1.0/calc_tempo),
-        (start_freq, 5.0/calc_tempo)
+
+        (start_freq*(8/9), (1.0/calc_tempo)*swings[0]),
+        (start_freq, (5.0/calc_tempo)*swings[1])
     ]
 
     return [note for note in notes if note]
@@ -31,7 +33,7 @@ sfile.setsampwidth(2)
 pygame.init()
 pygame.mixer.init(frequency=48000, channels=2)
 
-for note in lick_maths(800, 120, "TURN"):
+for note in lick_maths(800, 120, None, True):
     ncycles = note[1] * note[0]
     spc = int((48000 * note[1]) / ncycles)
 
