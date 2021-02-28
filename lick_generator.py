@@ -21,7 +21,7 @@ def lick_maths(start_freq, tempo, ornament, swing):
         (start_freq*1.125, 2.0/calc_tempo - (0.5/calc_tempo if ornament == "ACC" else 0)),
 
         (start_freq*(8/9), (1.0/calc_tempo)*swings[0]),
-        (start_freq, (5.0/calc_tempo)*swings[1])
+        (start_freq, (1.0/calc_tempo)*swings[1] + 5.0/calc_tempo)
     ]
 
     return [note for note in notes if note]
@@ -33,7 +33,7 @@ sfile.setsampwidth(2)
 pygame.init()
 pygame.mixer.init(frequency=48000, channels=2)
 
-for note in lick_maths(800, 120, None, True):
+for note in lick_maths(500, 160, None, True):
     ncycles = note[1] * note[0]
     spc = int((48000 * note[1]) / ncycles)
 
