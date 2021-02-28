@@ -1,7 +1,7 @@
 import wave
 import numpy
 import pygame
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -56,6 +56,7 @@ def index_handler():
     }
     return render_template("index.html", data=data)
 
+@app.route("/generate", methods=["POST"])
 def generate_handler():
     sfile = wave.open('lick.wav', 'w')
     sfile.setframerate(48000)
@@ -64,7 +65,12 @@ def generate_handler():
     pygame.init()
     pygame.mixer.init(frequency=48000, channels=2)
 
-    for note in lick_maths(500, 160, None, True):
+    for note in lick_maths(
+        float(request.form["note"]),
+        float(request.form["tempo"]),
+        request.form["ornament"] if request.form["ornament"] != "None" else None,
+        True if request.form["rhythm"] == "swung" else False
+        ):
         ncycles = note[1] * note[0]
         spc = int((48000 * note[1]) / ncycles)
 
@@ -80,6 +86,7 @@ def generate_handler():
 
     sfile.close()
 
+    return "Ye"
+
 if __name__ == "__main__":
-    
     app.run()
