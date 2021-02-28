@@ -1,7 +1,11 @@
 import wave
+from flask.helpers import send_file
 import numpy
 import pygame
-from flask import Flask, render_template, request
+import random
+from flask import Flask, render_template, request, send_file, redirect
+
+LICK_GEN_MAX = 10
 
 app = Flask(__name__)
 
@@ -56,9 +60,16 @@ def index_handler():
     }
     return render_template("index.html", data=data)
 
+@app.route("/audio/<lick_no>")
+def serve_audio(lick_no):
+    return send_file(f"audio/lick_{lick_no}.wav", cache_timeout=-1)
+
 @app.route("/generate", methods=["POST"])
 def generate_handler():
-    sfile = wave.open('lick.wav', 'w')
+
+    lick_no = random.randint(0, LICK_GEN_MAX)
+
+    sfile = wave.open(f"audio/lick_{lick_no}.wav", "w")
     sfile.setframerate(48000)
     sfile.setnchannels(2)
     sfile.setsampwidth(2)
@@ -86,7 +97,7 @@ def generate_handler():
 
     sfile.close()
 
-    return "Ye"
+    return redirect(f"/audio/{lick_no}", code=303)
 
 if __name__ == "__main__":
     app.run()
