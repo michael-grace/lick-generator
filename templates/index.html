@@ -14,7 +14,9 @@
 
             <b><label for="note">Starting Note:</label></b>
             <select id="note" name="note" class="form-control">
-
+                {% for note in data.notes %}
+                    <option value="{{note[1]}}">{{note[0]}}</option>
+                {% endfor %}
             </select>
 
             <br>
@@ -36,13 +38,13 @@
             <b><label for="ornament">Ornament:</label></b>
             <select id="ornament" name="ornament" class="form-control">
                 <option value="none">None</option>
-                <option value="acc">Acciaccatura</option>
-                <option value="turn">Turn</option>
+                <option value="ACC">Acciaccatura</option>
+                <option value="TURN">Turn</option>
             </select>
 
             <br>
 
-            <code>Coming Soon: Accompaniment</code>
+            <code>Coming Soon: Modes and Accompaniments</code>
 
             <br><br>
 
