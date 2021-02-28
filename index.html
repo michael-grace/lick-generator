@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <title>Lick Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+
+<body style="width: 100%; height:100%;" class="bg-dark p-5">
+    <div class="bg-white d-flex row justify-content-center" style="border-radius: 10px;">
+
+        <form class="form-group">
+            <h1>Lick Generator</h1>
+
+            <b><label for="note">Starting Note:</label></b>
+            <select id="note" name="note" class="form-control">
+
+            </select>
+
+            <br>
+
+            <b><label for="tempo">Tempo (BPM):</label></b>
+            <input id="tempo" name="tempo" type="number" min="30" max="420" class="form-control">
+
+            <br>
+
+            <div class="form-check-inline">
+                <b><label for="straight">Straight Rhythm</label></b>
+                <input type="radio" id="straight" name="rhythm" value="straight" class="form-control">
+                <input type="radio" id="swung" name="rhythm" value="swung" class="form-control">
+                <b><label for="female">Swung Rhythm</label><br></b>
+            </div>
+
+            <br>
+
+            <b><label for="ornament">Ornament:</label></b>
+            <select id="ornament" name="ornament" class="form-control">
+                <option value="none">None</option>
+                <option value="acc">Acciaccatura</option>
+                <option value="turn">Turn</option>
+            </select>
+
+            <br>
+
+            <code>Coming Soon: Accompaniment</code>
+
+            <br><br>
+
+            <input type="submit" value="Generate Lick" class="form-control btn btn-success">
+        </form>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+</body>
+
+</html>
